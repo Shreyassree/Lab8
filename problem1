@@ -1,0 +1,152 @@
+#include<iostream>
+#include<math.h>
+
+using namespace std;
+
+class Account
+{
+    public:
+        string name;
+        int acc_no;
+        string acc_type;
+        float balance;
+     
+    void inputData()
+    {
+        cout << "\nName of Customer: ";
+        cin >> name;
+        cout << "\nEnter account no: ";
+        cin >> acc_no;
+        cout << "\nEnter balance: ";
+        cin >> balance;
+    }
+    
+    void display()
+    {
+        cout << "\nName: " << name;
+        cout << "\nAccount no: " << acc_no;
+        cout << "\nBalance: " << balance;
+    }
+    
+    void Deposit()
+    {
+        int amount;
+    
+        cout << "\nEnter the amount to be deposited: ";
+        cin >> amount;
+        balance = balance + amount;
+    }
+    
+    void withdraw()
+    {
+        int amount;
+        cout << "\nEnter the amount to be withdrawn: ";
+    
+        cin >> amount;
+        if (amount > balance)
+        cout << "Insufficient balance: ";
+        else
+        balance = balance - amount;
+    }
+    
+    
+};
+    
+
+class cur_acct : public Account
+{
+    private:
+        int min_bal = 500;
+        int ser_charge = 50;
+    public:
+        void scharge()
+        {
+            if (balance < min_bal)
+            {
+            cout << "The service charge is: " << ser_charge << endl;
+            balance = balance - ser_charge;
+            }
+        }
+};
+
+
+class sav_acct : public Account
+{
+    private:
+        int t;               
+        int rate = 5;          
+        float ci;
+    public:
+    
+        void compound()
+        {
+            cout << "\nNumber of years(for interest): ";
+            cin >> t;
+            ci = balance * pow(1 + rate/100.0, t) - balance; 
+        
+            cout << "\nThe compound interest is: " << ci << endl;
+            balance = balance + ci;
+        }
+};
+
+int main()
+{
+    int option;
+    
+    while(option<=2)
+    {
+        cout << "\n1.Current Account";
+        cout << "\n2.Savings Account";
+        cout << "\n3.Exit";
+        cout << "\nChoose an option: ";
+        cin >> option;
+    
+    
+        switch(option)
+        {
+        
+        case 1:
+        {
+    
+            cur_acct c1;
+    
+            c1.inputData();
+            c1.display();
+            c1.Deposit();
+            c1.display();
+            c1.withdraw();
+            c1.scharge();
+            c1.display();
+        }
+    
+    break;
+    
+        case 2:
+        {
+            sav_acct s1;
+    
+            s1.inputData();
+            s1.display();
+            s1.Deposit();
+            s1.display();
+            s1.withdraw();
+            s1.display();
+            s1.compound();
+            s1.display();
+        }
+        
+    break;
+        
+        case 3: {}
+        return 1;
+        default:
+    
+      
+            cout << "\nInvalid Choice" << endl;
+      
+        }
+    
+    }
+    
+    return 0;
+}
